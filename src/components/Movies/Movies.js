@@ -8,6 +8,9 @@ function Movies() {
     <section className='movies'>
       <SearchForm />
       <MoviesCardList />
+      <div className='movies__container'>
+        <button className='movies__button' aria-label="Ещё" type="button">Ещё</button>
+      </div>
     </section>
   )
 }
