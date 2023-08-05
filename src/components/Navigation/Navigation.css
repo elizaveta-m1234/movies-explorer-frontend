@@ -11,6 +11,7 @@
   width: 44px;
   background-color: transparent;
   margin-top: -3px;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1040px) {

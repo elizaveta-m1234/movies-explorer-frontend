@@ -19,7 +19,7 @@ function AboutMe() {
               Здесь должно быть много связной информации.
               Здесь должно быть много связной информации.
             </p>
-            <a className='about-me__link' href='https://github.com/elizaveta-m1234'>Github</a>
+            <a className='about-me__link' href='https://github.com/elizaveta-m1234' target='_blank' rel='noreferrer'>Github</a>
           </div>
           <img className='about-me__photo' src={photo} alt='Фото разработчика'/>
         </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -14,36 +14,45 @@ import NotFound from '../NotFound/NotFound';
 import Popup from '../Popup/Popup';
 
 function App() {
+  const [isPopupOpened, setIsPopupOpened] = useState(false);
+
+  function handleBurgerClick() {
+    setIsPopupOpened(true);
+  }
+
+  function closePopup() {
+    setIsPopupOpened(false);
+  }
   
   return (
       <div className="app">
         <Routes>
-          <Route path='/' element={
+          <Route exact path='/' element={
             <>
-              <Header />
+              <Header onBurgerClick={handleBurgerClick} />
               <Main />
               <Footer />
             </>
           } />
           <Route path='/movies' element={
             <>
-              <Header />
+              <Header onBurgerClick={handleBurgerClick}/>
               <Movies />
               <Footer />
-              <Popup />
+              <Popup isOpen={isPopupOpened} onClose={closePopup} />
             </>
           } />
           <Route path='/saved-movies' element={
             <>
-              <Header />
+              <Header onBurgerClick={handleBurgerClick}/>
               <SavedMovies />
               <Footer />
-              <Popup />
+              <Popup isOpen={isPopupOpened} onClose={closePopup}/>
             </>
           } />
           <Route path='/profile' element={
             <>
-              <Header />
+              <Header onBurgerClick={handleBurgerClick}/>
               <Profile />
             </>
           } />

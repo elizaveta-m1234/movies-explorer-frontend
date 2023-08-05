@@ -9,9 +9,14 @@
   align-items: center;
   display: flex;
   visibility: hidden;
-  opacity: 1;
+  opacity: 0;
   transition: visibility 0s, opacity 0.2s linear;
   z-index: 3;
+}
+
+.popup_is-opened {
+  visibility: visible;
+  opacity: 1;
 }
 
 .popup__container {
@@ -31,6 +36,7 @@
   border: none;
   align-self: flex-end;
   margin: 23px 23px 0 0;
+  cursor: pointer;
 }
 
 .popup__links {
@@ -77,12 +83,6 @@
   width: 26px;
   padding: 0;
   margin: 0 0 0 7px;
-}
-
-@media screen and (max-width: 1040px) {
-  .popup {
-    visibility: visible;
-  }
 }
 
 @media screen and (max-width: 568px) {

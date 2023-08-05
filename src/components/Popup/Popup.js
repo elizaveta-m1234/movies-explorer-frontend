@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import './Popup.css';
 import profile from '../../images/profile.svg';
 
-function Popup({ onClose}) {
+function Popup({ isOpen, onClose}) {
   return (
-    <div className='popup'>
+    <div className={ isOpen ? `popup popup_is-opened` : `popup` }>
       <div className='popup__container'>
         <button onClick={onClose} className="popup__close" aria-label="Закрыть" type="button"></button>
         <nav className='popup__links'>

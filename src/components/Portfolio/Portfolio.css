@@ -52,7 +52,13 @@
 
 .portfolio__arrow {
   margin: 0;
-  padding: 2px 8px 0 0;
+  padding: 0;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 60px;
+  letter-spacing: -0.04em;
+  height: 29px;
+  width: 29px;
 }
 
 @media screen and (max-width: 1040px) {
@@ -62,6 +68,12 @@
 
   .portfolio__link {
     font-size: 28px;
+  }
+
+  .portfolio__arrow {
+    font-size: 28px;
+    height: 26px;
+    width: 26px;
   }
 }
 
@@ -85,4 +97,11 @@
     font-size: 18px;
     line-height: 28px;
   }
+
+    .portfolio__arrow {
+      font-size: 18px;
+      line-height: 28px;
+      height: 18px;
+      width: 18px;
+    }
 }
