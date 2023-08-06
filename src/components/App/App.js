@@ -4,8 +4,6 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
-import Movies from '../Movies/Movies';
-import SavedMovies from '../SavedMovies/SavedMovies';
 import Footer from '../Footer/Footer';
 import Register from '../Register/Register'
 import Login from '../Login/Login';
@@ -36,8 +34,8 @@ function App() {
           } />
           <Route path='/movies' element={
             <>
-              <Header onBurgerClick={handleBurgerClick}/>
-              <Movies />
+              <Header onBurgerClick={handleBurgerClick} />
+              <Main />
               <Footer />
               <Popup isOpen={isPopupOpened} onClose={closePopup} />
             </>
@@ -45,7 +43,7 @@ function App() {
           <Route path='/saved-movies' element={
             <>
               <Header onBurgerClick={handleBurgerClick}/>
-              <SavedMovies />
+              <Main />
               <Footer />
               <Popup isOpen={isPopupOpened} onClose={closePopup}/>
             </>

@@ -12,7 +12,7 @@ function Header({ onBurgerClick }) {
     return (
       <header className='header header_location_home'>
         <div className='header__container'>
-          <Link to={"/"} className='header__link_type_home'>
+          <Link to={"/"} className='header__link header__link_type_home'>
             <img className='header__logo' src={logo} alt='Логотип' />
           </Link>
           <div className='header__auth-links'>

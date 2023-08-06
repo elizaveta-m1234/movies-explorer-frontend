@@ -127,6 +127,11 @@
   line-height: auto;
   color: #fff;
   cursor: pointer;
+  transition: all 0.3s;
+}
+
+.profile__edit:hover {
+  opacity: 70%;
 }
 
 .profile__exit {
@@ -139,6 +144,11 @@
   line-height: auto;
   color: #EE3465;
   cursor: pointer;
+  transition: all 0.3s;
+}
+
+.profile__exit:hover {
+  opacity: 70%;
 }
 
 .profile__message {

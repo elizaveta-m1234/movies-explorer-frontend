@@ -16,6 +16,11 @@
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s;
+}
+
+.movies__button:hover {
+  opacity: 70%;
 }
 
 @media screen and (max-width: 568px) {
