@@ -11,7 +11,7 @@ import Portfolio from '../Portfolio/Portfolio';
 function Main() {
   const location = useLocation();
   if (location.pathname === "/") {
-    return <main className='Main'>
+    return <main className='main'>
       <Promo />
       <AboutProject />
       <Techs />
@@ -21,13 +21,13 @@ function Main() {
   }
 
   if (location.pathname === "/movies") {
-    return <main className='Main'>
+    return <main className='main'>
       <Movies />
     </main>
   }
 
   if (location.pathname === "/saved-movies") {
-    return <main className='Main'>
+    return <main className='main'>
       <SavedMovies />
     </main>
   }
