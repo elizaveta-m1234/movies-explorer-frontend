@@ -21,7 +21,7 @@ function App() {
   function closePopup() {
     setIsPopupOpened(false);
   }
-  
+
   return (
       <div className="app">
         <Routes>
