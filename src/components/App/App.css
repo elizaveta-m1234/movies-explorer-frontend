@@ -1,0 +1,7 @@
+.app {
+  min-height: 100vh;
+  background-color: #202020;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

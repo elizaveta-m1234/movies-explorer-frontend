@@ -1,0 +1,30 @@
+.movies__container {
+  max-width: calc(1280px - 70px * 2);
+  margin: 0 auto;
+  padding: 50px 0 80px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.movies__button {
+  width: 320px;
+  height: 36px;
+  border: none;
+  background-color: #2F2F2F;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.movies__button:hover {
+  opacity: 70%;
+}
+
+@media screen and (max-width: 568px) {
+  .movies__button {
+    width: 240px;
+  }
+}
