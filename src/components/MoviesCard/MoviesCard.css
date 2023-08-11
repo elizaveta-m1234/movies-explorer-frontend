@@ -69,6 +69,16 @@
   background-position: center;
 }
 
+.card__button_delete {
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  border: none;
+  background-image: url('../../images/delete.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .card__duration {
   margin: 0;
   padding: 6px 0 0 0;
