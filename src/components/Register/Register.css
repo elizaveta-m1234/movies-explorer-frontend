@@ -68,7 +68,6 @@
   height: 12px;
   display: block;
   margin: 6px 0;
-  visibility: hidden;
 }
 
 .register__error:last-of-type {
@@ -95,9 +94,14 @@
   opacity: 80%;
 }
 
-.register__button_disabled {
+.register__button:disabled {
   background-color: #F8F8F8;
   color: #C2C2C2;
+  cursor: auto;
+}
+
+.register__button:disabled:hover {
+  opacity: 100%;
 }
 
 .register__nav {

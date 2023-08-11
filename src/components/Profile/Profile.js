@@ -1,12 +1,27 @@
+import { useEffect, useContext } from 'react';
+import useFormWithValidation from '../../utils/useFormWithValidation';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import './Profile.css';
 
-function Profile() {
+function Profile({ onEdit, onExit, isSuccess, isFail }) {
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const currentUser = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    resetForm({ email: currentUser.email, name: currentUser.name }, {}, false);
+  }, [currentUser, resetForm]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    onEdit({ name: values.name, email: values.email });
+  }
 
   return (
     <section className="profile">
       <div className="profile__container">
-        <h1 className="profile__title">Привет, currentUser.name!</h1> { /*прописать контекст на следующем этапе*/ }
-        <form className="profile__form">
+        <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+        <form className="profile__form" onSubmit={handleSubmit} formNoValidate>
           <fieldset className="profile__fieldset">
             <div className="profile__input-container">
               <label className="profile__label">Имя</label>
@@ -19,9 +34,11 @@ function Profile() {
                 required
                 minLength="2"
                 maxLength="30"
+                onChange={handleChange}
+                value={values.name || ''}
               />
             </div>
-            <span className="profile__error name-error"></span>
+            <span className="profile__error name-error">{errors.name || ''}</span>
             <div className="profile__input-container">
               <label className="profile__label">E-mail</label>
               <input
@@ -31,20 +48,20 @@ function Profile() {
                 name="email"
                 placeholder="E-mail"
                 required
+                onChange={handleChange}
+                value={values.email || ''}
               />
             </div>
-            <span className="profile__error email-error"></span>
+            <span className="profile__error email-error">{errors.email || ''}</span>
           </fieldset>
           <div className="profile__controls">
-            {/*выбрать, что будет отображаться в разных состояниях*/}
-            <div className='profile__submit'>
-              <span className="profile__message">При обновлении профиля произошла ошибка.</span>
-              <button type="submit" className="profile__button">Сохранить</button>
-            </div>
-            <button className="profile__edit">Редактировать</button>
-            <button className="profile__exit">Выйти из аккаунта</button>
+            {/*Если данные введены корректно и отличаются от изначальных — кнопка «Редактировать» станет активна и пользователь сможет кликнуть по ней.*/}
+            {isSuccess && <span className="profile__message">Данные успешно изменены</span>}
+            {isFail && <span className="profile__message">При обновлении профиля произошла ошибка.</span>}
+            <button className="profile__edit" type="submit" disabled={!isValid || (values.name === currentUser.name & values.email === currentUser.email)} onClick={handleSubmit}>Редактировать</button>
           </div>
         </form>
+        <button className="profile__exit" onClick={onExit}>Выйти из аккаунта</button>
       </div>
     </section>
   )

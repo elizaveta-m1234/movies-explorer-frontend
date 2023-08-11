@@ -1,18 +1,29 @@
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Preloader from '../Preloader/Preloader';
 
-function Movies() {
-
-  return (
-    <section className='movies'>
-      <SearchForm />
-      <MoviesCardList />
-      <div className='movies__container'>
-        <button className='movies__button' aria-label="Ещё" type="button">Ещё</button>
-      </div>
-    </section>
-  )
+function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, keyWord, wasThereASearch }) {
+  if (wasThereASearch) {
+    return (
+      <section className='movies'>
+        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} keyWord={keyWord} />
+        {
+          showPreloader ?
+            <Preloader />
+            :
+            <MoviesCardList foundMovies={foundMovies} />
+        }
+      </section>
+    )
+  } else {
+    return (
+      <section className='movies'>
+        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} />
+        <div className='movies__empty'></div> :
+      </section>
+    )
+  }
 }
 
 export default Movies

@@ -4,13 +4,12 @@ import profile from '../../images/profile.svg';
 import { Link, useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 
-function Header({ onBurgerClick }) {
+function Header({ onBurgerClick, loggedIn }) {
   const location = useLocation();
 
-  if (location.pathname === "/") {
-  
+  if (!loggedIn) {
     return (
-      <header className='header header_location_home'>
+      <header className={(location.pathname === "/") ? `header header_location_home` : `header`} >
         <div className='header__container'>
           <Link to={"/"} className='header__link header__link_type_home'>
             <img className='header__logo' src={logo} alt='Логотип' />
@@ -24,7 +23,7 @@ function Header({ onBurgerClick }) {
     )
   } else {
     return (
-            <header className='header'>
+      <header className={(location.pathname === "/") ? `header header_location_home` : `header`}>
         <div className='header__container'>
           <Link to={"/"} className='header__link header__link_type_home'>
             <img className='header__logo' src={logo} alt='Логотип' />

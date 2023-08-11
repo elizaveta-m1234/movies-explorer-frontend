@@ -78,7 +78,7 @@
   align-self: center;
 }
 
-@media screen and (max-width: 1304px) {
+@media screen and (max-width: 1040px) {
   .card__container {
     width: 339px;
   }

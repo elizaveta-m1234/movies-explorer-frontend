@@ -1,13 +1,11 @@
 import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
-import SavedCardList from '../SavedCardList/SavedCardList';
 
-function SavedMovies() {
+function SavedMovies({ onFilter }) {
 
   return (
     <section className='movies'>
-      <SearchForm />
-      <SavedCardList />
+      <SearchForm onFilter={onFilter} />
     </section>
   )
 }

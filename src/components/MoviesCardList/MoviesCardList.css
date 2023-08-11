@@ -1,6 +1,14 @@
 .card-list {
   max-width: calc(1280px - 70px * 2);
   margin: 0 auto;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-list__list {
+  max-width: calc(1280px - 70px * 2);
+  margin: 0 auto;
   padding: 70px 70px 10px 70px;
   display: grid;
   grid-template-columns: repeat(4, 270px);
@@ -8,8 +16,34 @@
   justify-content: center;
 }
 
-@media screen and (max-width: 1304px) {
-  .card-list {
+.card-list__button {
+  width: 320px;
+  height: 36px;
+  border: none;
+  background-color: #2F2F2F;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin: 0 auto;
+  justify-self: center
+}
+
+.card-list__button:hover {
+  opacity: 70%;
+}
+
+.card-list__error {
+  margin: 20px auto;
+  text-align: center;
+  width: calc(100% - 140px);
+  color: #fff;
+}
+
+@media screen and (max-width: 1040px) {
+  .card-list__list {
     padding: 70px 30px 10px 30px;
     grid-template-columns: repeat(2, 339px);
     gap: 30px 30px;
@@ -17,9 +51,13 @@
 }
 
 @media screen and (max-width: 765px) {
-  .card-list {
+  .card-list__list {
     padding: 40px 10px 34px 10px;
     grid-template-columns: repeat(1, 300px);
     gap: 34px;
+  }
+
+  .card-list__button {
+    width: 240px;
   }
 }

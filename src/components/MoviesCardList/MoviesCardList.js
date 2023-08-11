@@ -1,24 +1,81 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import useWindowWidth from '../../utils/useWindowWidth';
 
-function MoviesCardList() {
+import {
+  MIN_WIDTH_BREAKPOINT,
+  MID_WIDTH_BREAKPOINT,
+  MIN_WIDTH_CARDS,
+  MID_WIDTH_CARDS,
+  MAX_WIDTH_CARDS,
+  MIN_WIDTH_MORE,
+  MID_WIDTH_MORE,
+  MAX_WIDTH_MORE
+} from '../../utils/constants';
 
-  return (
-    <ul className='card-list'>
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-    </ul>
-  )
+function MoviesCardList({ foundMovies, savedMovies }) {
+  const location = useLocation();
+  const windowWidth = useWindowWidth();
+  const [initialNumber, setInitialNumber] = useState(0);
+  const [additionalNumber, setAdditionalNumber] = useState(0);
+
+  //прописываем количество карточек для разной ширины
+  useEffect(() => {
+    if (windowWidth <= MIN_WIDTH_BREAKPOINT) {
+      setInitialNumber(MIN_WIDTH_CARDS);
+      setAdditionalNumber(MIN_WIDTH_MORE)
+    }
+    if (windowWidth > MIN_WIDTH_BREAKPOINT && windowWidth <= MID_WIDTH_BREAKPOINT) {
+      setInitialNumber(MID_WIDTH_CARDS);
+      setAdditionalNumber(MID_WIDTH_MORE)
+    }
+    if (windowWidth > MID_WIDTH_BREAKPOINT) {
+      setInitialNumber(MAX_WIDTH_CARDS);
+      setAdditionalNumber(MAX_WIDTH_MORE)
+    }
+  }, [windowWidth]);
+
+  //добавляем дополнительные фильмы на страницу
+  function handleMoreButtonClick() {
+    setInitialNumber(initialNumber + additionalNumber);
+  }
+
+    if (location.pathname === "/movies") {
+      return (
+        <section className='card-list'>
+          {
+            foundMovies === null || foundMovies === undefined ? 
+              <p className='card-list__error'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.</p>
+              :
+              foundMovies.length === 0 ? 
+                <p className='card-list__error'>Ничего не найдено</p>
+                :
+                <>
+                  <ul className='card-list__list'>
+                    {foundMovies.slice(0, initialNumber).map((movie) => (
+                      <MoviesCard movie={movie} key={movie.id || movie._id} />
+                    ))}
+                  </ul>
+                  {foundMovies.length > initialNumber &&
+                    <button className='card-list__button' onClick={handleMoreButtonClick} aria-label="Ещё" type="button">Ещё</button>
+                  }
+                </>
+          }
+        </section>
+      )
+  }
+
+  if (location.pathname === "/saved-movies") {
+    return (
+      <section className='card-list'>
+        <ul className='card-list__list'>
+        </ul>
+        <button className='card-list__button' aria-label="Ещё" type="button">Ещё</button>
+      </section>
+    )
+  }
 }
 
 export default MoviesCardList
