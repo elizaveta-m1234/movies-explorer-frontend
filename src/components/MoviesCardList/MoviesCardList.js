@@ -15,7 +15,7 @@ import {
   MAX_WIDTH_MORE
 } from '../../utils/constants';
 
-function MoviesCardList({ foundMovies, savedMovies }) {
+function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete }) {
   const location = useLocation();
   const windowWidth = useWindowWidth();
   const [initialNumber, setInitialNumber] = useState(0);
@@ -42,37 +42,49 @@ function MoviesCardList({ foundMovies, savedMovies }) {
     setInitialNumber(initialNumber + additionalNumber);
   }
 
-    if (location.pathname === "/movies") {
-      return (
-        <section className='card-list'>
-          {
-            foundMovies === null || foundMovies === undefined ? 
-              <p className='card-list__error'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.</p>
+  if (location.pathname === "/movies") {
+    return (
+      <section className='card-list'>
+        {
+          foundMovies === null || foundMovies === undefined ? 
+            <p className='card-list__error'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.</p>
+            :
+            foundMovies.length === 0 ? 
+              <p className='card-list__error'>Ничего не найдено</p>
               :
-              foundMovies.length === 0 ? 
-                <p className='card-list__error'>Ничего не найдено</p>
-                :
-                <>
-                  <ul className='card-list__list'>
-                    {foundMovies.slice(0, initialNumber).map((movie) => (
-                      <MoviesCard movie={movie} key={movie.id || movie._id} />
-                    ))}
-                  </ul>
-                  {foundMovies.length > initialNumber &&
-                    <button className='card-list__button' onClick={handleMoreButtonClick} aria-label="Ещё" type="button">Ещё</button>
-                  }
-                </>
-          }
-        </section>
-      )
+              <>
+                <ul className='card-list__list'>
+                  {foundMovies.slice(0, initialNumber).map((movie) => (
+                    <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} savedMovies={savedMovies} />
+                  ))}
+                </ul>
+                {foundMovies.length > initialNumber &&
+                  <button className='card-list__button' onClick={handleMoreButtonClick} aria-label="Ещё" type="button">Ещё</button>
+                }
+              </>
+        }
+      </section>
+    )
   }
 
   if (location.pathname === "/saved-movies") {
     return (
       <section className='card-list'>
-        <ul className='card-list__list'>
-        </ul>
-        <button className='card-list__button' aria-label="Ещё" type="button">Ещё</button>
+        {
+          savedMovies === null || savedMovies === undefined ? 
+            <p className='card-list__error'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.</p>
+            :
+            savedMovies.length === 0 ? 
+              <p className='card-list__error'>Ничего не найдено</p>
+              :
+              <>
+                <ul className='card-list__list'>
+                  {savedMovies.map((movie) => (
+                    <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete}/>
+                  ))}
+                </ul>
+              </>
+        }
       </section>
     )
   }

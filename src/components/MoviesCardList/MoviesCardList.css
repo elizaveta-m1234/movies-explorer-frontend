@@ -9,7 +9,7 @@
 .card-list__list {
   max-width: calc(1280px - 70px * 2);
   margin: 0 auto;
-  padding: 70px 70px 10px 70px;
+  padding: 70px 0 10px 0;
   display: grid;
   grid-template-columns: repeat(4, 270px);
   gap: 38px 20px;
@@ -42,7 +42,7 @@
   color: #fff;
 }
 
-@media screen and (max-width: 1040px) {
+@media screen and (max-width: 1304px) {
   .card-list__list {
     padding: 70px 30px 10px 30px;
     grid-template-columns: repeat(2, 339px);

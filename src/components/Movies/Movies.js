@@ -3,7 +3,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, keyWord, wasThereASearch }) {
+function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly, keyWord, wasThereASearch, onSave, onDelete }) {
   if (wasThereASearch) {
     return (
       <section className='movies'>
@@ -12,14 +12,14 @@ function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, keyWord, was
           showPreloader ?
             <Preloader />
             :
-            <MoviesCardList foundMovies={foundMovies} />
+            <MoviesCardList foundMovies={foundMovies} onSave={onSave} onDelete={onDelete} />
         }
       </section>
     )
   } else {
     return (
       <section className='movies'>
-        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} />
+        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} />
         <div className='movies__empty'></div> :
       </section>
     )

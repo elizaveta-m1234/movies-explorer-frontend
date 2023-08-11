@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -21,7 +21,6 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
-  const [foundMoviesSaved, setFoundMoviesSaved] = useState([]);
   const [keyWord, setKeyWord] = useState("");
   const [keyWordSaved, setKeySavedWord] = useState("");
   const [isShortsOnly, setIsShortsOnly] = useState(false);
@@ -30,6 +29,7 @@ function App() {
   const [showPreloader, setShowPreloader] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [wasThereASearch, setWasThereASearch] = useState(false);
+  const [wasThereASearchSaved, setWasThereASearchSaved] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -73,13 +73,15 @@ function App() {
         .then((res) => {
           setLoggedIn(true);
           mainApi.setToken(token);
-          if (localStorage.getItem('foundMovies') || localStorage.getItem('savedMovies') || localStorage.getItem('keyWord')) {
+          if (localStorage.getItem('foundMovies') || localStorage.getItem('savedMovies') || localStorage.getItem('keyWord') || localStorage.getItem('checkbox')) {
             const moviesFound = localStorage.getItem('foundMovies');
             setFoundMovies(JSON.parse(moviesFound));
             const moviesSaved = localStorage.getItem('savedMovies');
             setSavedMovies(JSON.parse(moviesSaved));
             const keyWordStorage = localStorage.getItem('keyWord');
             setKeyWord(JSON.parse(keyWordStorage));
+            const checkboxStorage = localStorage.getItem('checkbox');
+            setIsShortsOnly(JSON.parse(checkboxStorage));
           }
           navigate('/movies', { replace: true })
         })
@@ -142,20 +144,46 @@ function App() {
 
 // поиск по сохраненным фильмам -- не сохраняется при перезагрузке
   function filterMoviesSaved({ movieName }) {
+    setWasThereASearchSaved(true);
     setShowPreloader(true);
     setKeySavedWord(movieName);
     if (isShortsOnly) {
       const foundMoviesShortSaved = savedMovies.filter((movie) => {
         return movie.duration <= 40 && (movie.nameRU.toLowerCase().includes(movieName.toLowerCase()) || movie.nameEN.toLowerCase().includes(movieName.toLowerCase()));
       })
-      setFoundMoviesSaved(foundMoviesShortSaved);
+      setSavedMovies(foundMoviesShortSaved);//не меняет local storage или данные на сервере, т.ч. при перезагрузке восстановится
     } else {
       const foundMoviesAllSaved = savedMovies.filter((movie) => {
         return movie.nameRU.toLowerCase().includes(movieName.toLowerCase()) || movie.nameEN.toLowerCase().includes(movieName.toLowerCase());
       })
-      setFoundMoviesSaved(foundMoviesAllSaved);
+      setSavedMovies(foundMoviesAllSaved);
     }
     setShowPreloader(false);
+  }
+
+//сохранение фильма
+  function handleMovieSave(movie) {
+      mainApi.saveMovie(movie)
+        .then((newMovie) => {
+          setSavedMovies([newMovie, ...savedMovies]);
+          localStorage.setItem('savedMovies', JSON.stringify([newMovie, ...savedMovies]));
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  
+//удаление фильма
+  function handleMovieDelete(movie) {
+    mainApi.deleteMovie(movie._id)
+      .then(() => {
+        const newArray = savedMovies.filter((item) => item.movieId !== movie.id);
+        setSavedMovies(newArray);
+        localStorage.setItem('savedMovies', JSON.stringify(newArray));
+      })
+      .catch((err) => {
+          console.log(err);
+        })
   }
 
 //регистрация
@@ -245,8 +273,12 @@ function App() {
                 showPreloader={showPreloader}
                 onFilter={filterMoviesAll}
                 onCheckbox={handleCheckbox}
+                isShortsOnly={isShortsOnly}
                 keyWord={keyWord}
                 wasThereASearch={wasThereASearch}
+                onSave={handleMovieSave}
+                onDelete={handleMovieDelete}
+                savedMovies={savedMovies}
               />
               <Footer />
               <Popup isOpen={isPopupOpened} onClose={closePopup} />
@@ -259,11 +291,13 @@ function App() {
                 element={Main}
                 loggedIn={loggedIn}
                 savedMovies={savedMovies}
-                foundMovies={foundMoviesSaved}
                 showPreloader={showPreloader}
-                onFilter={filterMoviesSaved}
+                onFilterSaved={filterMoviesSaved}
                 onCheckbox={handleCheckbox}
-                keyWord={keyWordSaved}
+                isShortsOnly={isShortsOnly}
+                wasThereASearchSaved={wasThereASearchSaved}
+                onSave={handleMovieSave}
+                onDelete={handleMovieDelete}
               />
               <Footer />
               <Popup isOpen={isPopupOpened} onClose={closePopup}/>

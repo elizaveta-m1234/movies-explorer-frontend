@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import search from '../../images/search.svg';
 import useFormWithValidation from '../../utils/useFormWithValidation';
 
-function SearchForm({ onFilter, onCheckbox, keyWord }) {
-  const { values, handleChange, isValid, resetForm } = useFormWithValidation();
+function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord }) {
+  const { values, handleChange, resetForm } = useFormWithValidation();
   const [error, setError] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
     resetForm({ movieName: keyWord || ""}, {}, false);
@@ -16,9 +18,14 @@ function SearchForm({ onFilter, onCheckbox, keyWord }) {
     e.preventDefault();
 
     if (!values.movieName) {
-        setError('Введите ключевое слово');
+      setError('Введите ключевое слово');
     } else {
+      if (location.pathname === "/movies") {
         onFilter({ movieName: values.movieName });
+      }
+      if (location.pathname === "/saved-movies") {
+        onFilterSaved ({ movieName: values.movieName });
+      }
     }
   }
 
@@ -33,12 +40,14 @@ function SearchForm({ onFilter, onCheckbox, keyWord }) {
               type='text'
               required
               name="movieName"
+              id="movieName"
               value={values.movieName || ''}
               onChange={handleChange}
             />
-            <button className='search__button' type='submit' disabled={!isValid}>Найти</button>
+            <span className="search__error">{error}</span>
+            <button className='search__button' type='submit'>Найти</button>
           </form>
-          <FilterCheckbox onCheckbox={onCheckbox} />
+          <FilterCheckbox onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} formSubmit={handleSubmit} />
         </div>
       </div>
     </section>
