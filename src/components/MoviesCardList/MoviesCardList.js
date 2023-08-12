@@ -15,7 +15,7 @@ import {
   MAX_WIDTH_MORE
 } from '../../utils/constants';
 
-function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete }) {
+function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike }) {
   const location = useLocation();
   const windowWidth = useWindowWidth();
   const [initialNumber, setInitialNumber] = useState(0);
@@ -43,6 +43,7 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete }) {
   }
 
   if (location.pathname === "/movies") {
+  
     return (
       <section className='card-list'>
         {
@@ -55,7 +56,7 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete }) {
               <>
                 <ul className='card-list__list'>
                   {foundMovies.slice(0, initialNumber).map((movie) => (
-                    <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} savedMovies={savedMovies} />
+                    <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} />
                   ))}
                 </ul>
                 {foundMovies.length > initialNumber &&
@@ -80,7 +81,7 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete }) {
               <>
                 <ul className='card-list__list'>
                   {savedMovies.map((movie) => (
-                    <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete}/>
+                    <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} />
                   ))}
                 </ul>
               </>

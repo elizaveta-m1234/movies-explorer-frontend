@@ -1,33 +1,22 @@
-import { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import './MoviesCard.css';
 import { MIN_IN_HOUR } from '../../utils/constants';
 
-function MoviesCard({ movie, onSave, onDelete, savedMovies}) {
+function MoviesCard({ movie, onSave, onDelete, savedMovies, checkLike}) {
   const location = useLocation();
 
-  const [isLiked, setIsLiked] = useState(false);
+  const isLiked = checkLike(movie);
 
-  const checkLike = useCallback(() => {
-    if (savedMovies) {
-      if (savedMovies.find((item) => item.movieId === movie.id)) {
-        setIsLiked(true);
-      } else {
-        setIsLiked(false);
-      }
-    }
-  }, [movie.id, savedMovies]);
-
-  useEffect(() => {
-    checkLike();
-  }, [checkLike]);
 
   function handleSave() {
     onSave(movie);
   }
 
   function handleDelete() {
-    onDelete(movie);
+    const chosenMovie = savedMovies.find((savedMovie) => {
+      return savedMovie.movieId === (location.pathname === "/movies" ? movie.id : movie.movieId)
+    })
+    return onDelete(chosenMovie._id)
   }
 
   function calculateDuration() {

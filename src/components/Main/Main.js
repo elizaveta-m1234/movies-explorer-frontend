@@ -9,7 +9,7 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 
 function Main({ loggedIn, movies, foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly, keyWord, wasThereASearch,
-savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDelete}) {
+savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDelete, checkLike}) {
   const location = useLocation();
   if (location.pathname === "/") {
     return <main className='main'>
@@ -36,6 +36,7 @@ savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDe
         onSave={onSave}
         onDelete={onDelete}
         savedMovies={savedMovies}
+        checkLike={checkLike}
       />
     </main>
   }
@@ -54,6 +55,7 @@ savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDe
         wasThereASearchSaved={wasThereASearchSaved}
         onSave={onSave}
         onDelete={onDelete}
+        checkLike={checkLike}
       />
     </main>
   }

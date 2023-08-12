@@ -162,11 +162,16 @@ function App() {
   }
 
 //сохранение фильма
+  function checkLike(movie) {
+    return savedMovies.some((item) => item.movieId === movie.id);
+  };
+  
   function handleMovieSave(movie) {
       mainApi.saveMovie(movie)
         .then((newMovie) => {
           setSavedMovies([newMovie, ...savedMovies]);
           localStorage.setItem('savedMovies', JSON.stringify([newMovie, ...savedMovies]));
+          console.log(savedMovies);
         })
         .catch((err) => {
           console.log(err);
@@ -174,10 +179,10 @@ function App() {
     }
   
 //удаление фильма
-  function handleMovieDelete(movie) {
-    mainApi.deleteMovie(movie._id)
+  function handleMovieDelete(movieId) {
+    mainApi.deleteMovie(movieId)
       .then(() => {
-        const newArray = savedMovies.filter((item) => item.movieId !== movie.id);
+        const newArray = savedMovies.filter((item) => item._id !== movieId);
         setSavedMovies(newArray);
         localStorage.setItem('savedMovies', JSON.stringify(newArray));
       })
@@ -279,6 +284,7 @@ function App() {
                 onSave={handleMovieSave}
                 onDelete={handleMovieDelete}
                 savedMovies={savedMovies}
+                checkLike={checkLike}
               />
               <Footer />
               <Popup isOpen={isPopupOpened} onClose={closePopup} />
@@ -298,6 +304,7 @@ function App() {
                 wasThereASearchSaved={wasThereASearchSaved}
                 onSave={handleMovieSave}
                 onDelete={handleMovieDelete}
+                checkLike={checkLike}
               />
               <Footer />
               <Popup isOpen={isPopupOpened} onClose={closePopup}/>
