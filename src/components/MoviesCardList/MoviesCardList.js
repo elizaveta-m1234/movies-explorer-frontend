@@ -15,7 +15,7 @@ import {
   MAX_WIDTH_MORE
 } from '../../utils/constants';
 
-function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike }) {
+function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike, wasThereASearchSaved }) {
   const location = useLocation();
   const windowWidth = useWindowWidth();
   const [initialNumber, setInitialNumber] = useState(0);
@@ -56,7 +56,7 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike 
               <>
                 <ul className='card-list__list'>
                   {foundMovies.slice(0, initialNumber).map((movie) => (
-                    <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} />
+                    <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} savedMovies={savedMovies} />
                   ))}
                 </ul>
                 {foundMovies.length > initialNumber &&
@@ -75,16 +75,19 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike 
           savedMovies === null || savedMovies === undefined ? 
             <p className='card-list__error'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.</p>
             :
-            savedMovies.length === 0 ? 
+            savedMovies.length === 0 && wasThereASearchSaved ?
               <p className='card-list__error'>Ничего не найдено</p>
               :
-              <>
-                <ul className='card-list__list'>
-                  {savedMovies.map((movie) => (
-                    <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} />
-                  ))}
-                </ul>
-              </>
+              savedMovies.length === 0 ?
+                <div className='card-list__empty'></div>
+                :
+                <>
+                  <ul className='card-list__list'>
+                    {savedMovies.map((movie) => (
+                      <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} savedMovies={savedMovies} />
+                    ))}
+                  </ul>
+                </>
         }
       </section>
     )

@@ -74,6 +74,7 @@ function App() {
           setLoggedIn(true);
           mainApi.setToken(token);
           if (localStorage.getItem('foundMovies') || localStorage.getItem('savedMovies') || localStorage.getItem('keyWord') || localStorage.getItem('checkbox')) {
+            setWasThereASearch(true);
             const moviesFound = localStorage.getItem('foundMovies');
             setFoundMovies(JSON.parse(moviesFound));
             const moviesSaved = localStorage.getItem('savedMovies');

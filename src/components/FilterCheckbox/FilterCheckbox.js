@@ -6,7 +6,7 @@ function FilterCheckbox({ onCheckbox, isShortsOnly, formSubmit }) {
     e.preventDefault();
 
     onCheckbox();
-    formSubmit();
+    formSubmit(e);
   }
 
   return (
@@ -14,7 +14,6 @@ function FilterCheckbox({ onCheckbox, isShortsOnly, formSubmit }) {
       <input
         className='checkbox__input'
         type='checkbox'
-        readOnly
         checked={isShortsOnly}
         onChange={handleCheckbox}
       />

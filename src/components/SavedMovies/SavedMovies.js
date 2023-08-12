@@ -4,10 +4,9 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
 function SavedMovies({ savedMovies, showPreloader, onFilterSaved, onCheckbox, isShortsOnly, wasThereASearchSaved, keyWord, onSave, onDelete, checkLike }) {
-  if (wasThereASearchSaved) {
     return (
       <section className='saved-movies'>
-        <SearchForm onFilterSaved={onFilterSaved} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} />
+        <SearchForm onFilterSaved={onFilterSaved} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} wasThereASearchSaved={wasThereASearchSaved} />
         {
           showPreloader ?
             <Preloader />
@@ -16,14 +15,6 @@ function SavedMovies({ savedMovies, showPreloader, onFilterSaved, onCheckbox, is
         }
       </section>
     )
-  } else {
-    return (
-      <section className='saved-movies'>
-        <SearchForm onFilterSaved={onFilterSaved} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} />
-        <div className='saved-movies__empty'></div> :
-      </section>
-    )
-  }
 }
 
 export default SavedMovies
