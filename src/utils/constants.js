@@ -10,3 +10,4 @@ export const MID_WIDTH_MORE = 2;
 export const MAX_WIDTH_MORE = 4;
 
 export const MIN_IN_HOUR = 60;
+export const SHORT_DURATION = 40;

@@ -14,6 +14,7 @@ import Popup from '../Popup/Popup';
 import { auth } from '../../utils/auth';
 import { mainApi } from '../../utils/MainApi';
 import { moviesApi } from '../../utils/MoviesApi';
+import { SHORT_DURATION } from '../../utils/constants';
 
 function App() {
   const [isPopupOpened, setIsPopupOpened] = useState(false);
@@ -68,6 +69,8 @@ function App() {
   //для повторного входа
   useEffect(() => {
     const token = localStorage.getItem("jwt");
+    const pathname = location.pathname;
+
     if (token) {
       auth.getContent(token)
         .then((res) => {
@@ -84,7 +87,10 @@ function App() {
             const checkboxStorage = localStorage.getItem('checkbox');
             setIsShortsOnly(JSON.parse(checkboxStorage));
           }
-          navigate('/movies', { replace: true })
+          
+          if (pathname === '/sign-up' || pathname === '/sign-up') {
+            navigate('/movies', { replace: true })  
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -123,13 +129,16 @@ function App() {
 
 //поиск по фильмам
   function filterMoviesAll({ movieName }) {
+    const shortDuration = SHORT_DURATION;
+
     setWasThereASearch(true);
     setShowPreloader(true);
     localStorage.setItem('keyWord', JSON.stringify(movieName));
     setKeyWord(movieName);
+    
     if (isShortsOnly) {
       const foundMoviesShort = movies.filter((movie) => {
-        return movie.duration <= 40 && (movie.nameRU.toLowerCase().includes(movieName.toLowerCase()) || movie.nameEN.toLowerCase().includes(movieName.toLowerCase()));
+        return movie.duration <= shortDuration && (movie.nameRU.toLowerCase().includes(movieName.toLowerCase()) || movie.nameEN.toLowerCase().includes(movieName.toLowerCase()));
       })
       localStorage.setItem('foundMovies', JSON.stringify(foundMoviesShort));
       setFoundMovies(foundMoviesShort);
@@ -148,6 +157,7 @@ function App() {
     setWasThereASearchSaved(true);
     setShowPreloader(true);
     setKeySavedWord(movieName);
+
     if (isShortsOnly) {
       const foundMoviesShortSaved = savedMovies.filter((movie) => {
         return movie.duration <= 40 && (movie.nameRU.toLowerCase().includes(movieName.toLowerCase()) || movie.nameEN.toLowerCase().includes(movieName.toLowerCase()));
