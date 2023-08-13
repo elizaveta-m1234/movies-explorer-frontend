@@ -22,6 +22,7 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
+  const [foundMoviesSaved, setFoundMoviesSaved] = useState([]);
   const [keyWord, setKeyWord] = useState("");
   const [keyWordSaved, setKeySavedWord] = useState("");
   const [isShortsOnly, setIsShortsOnly] = useState(false);
@@ -175,12 +176,12 @@ function App() {
       const foundMoviesShortSaved = savedMovies.filter((movie) => {
         return movie.duration <= shortDuration && (movie.nameRU.toLowerCase().includes(movieName.toLowerCase()) || movie.nameEN.toLowerCase().includes(movieName.toLowerCase()));
       })
-      setSavedMovies(foundMoviesShortSaved);//не меняет local storage или данные на сервере, т.ч. при перезагрузке восстановится
+      setFoundMoviesSaved(foundMoviesShortSaved);//не меняет local storage или данные на сервере, т.ч. при перезагрузке восстановится
     } else {
       const foundMoviesAllSaved = savedMovies.filter((movie) => {
         return movie.nameRU.toLowerCase().includes(movieName.toLowerCase()) || movie.nameEN.toLowerCase().includes(movieName.toLowerCase());
       })
-      setSavedMovies(foundMoviesAllSaved);
+      setFoundMoviesSaved(foundMoviesAllSaved);
     }
     setShowPreloader(false);
   }
@@ -329,6 +330,8 @@ function App() {
                 onSave={handleMovieSave}
                 onDelete={handleMovieDelete}
                 checkLike={checkLike}
+                foundMoviesSaved={foundMoviesSaved}
+                keyWordSaved={keyWordSaved}
               />
               <Footer />
               <Popup isOpen={isPopupOpened} onClose={closePopup}/>

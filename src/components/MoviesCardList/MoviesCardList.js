@@ -15,7 +15,7 @@ import {
   MAX_WIDTH_MORE
 } from '../../utils/constants';
 
-function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike, wasThereASearchSaved }) {
+function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike, wasThereASearchSaved, keyWordSaved, foundMoviesSaved }) {
   const location = useLocation();
   const windowWidth = useWindowWidth();
   const [initialNumber, setInitialNumber] = useState(0);
@@ -40,6 +40,12 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike,
   //добавляем дополнительные фильмы на страницу
   function handleMoreButtonClick() {
     setInitialNumber(initialNumber + additionalNumber);
+  }
+
+  function checkIfSearch() {
+    if (keyWordSaved === '') {
+      foundMoviesSaved = savedMovies
+    } 
   }
 
   if (location.pathname === "/movies") {
@@ -81,9 +87,11 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike,
               savedMovies.length === 0 ?
                 <div className='card-list__empty'></div>
                 :
+                
                 <>
                   <ul className='card-list__list'>
-                    {savedMovies.map((movie) => (
+                    {checkIfSearch()}
+                    {foundMoviesSaved.map((movie) => (
                       <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} savedMovies={savedMovies} />
                     ))}
                   </ul>

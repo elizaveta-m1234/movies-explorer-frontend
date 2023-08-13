@@ -30,8 +30,8 @@ function Header({ onBurgerClick, loggedIn }) {
           </Link>
           <div className='header__nav'>
             <div className='header__movie-links'>
-              <Link className='header__link header__link_type_movies' activeClassName='header__link_active' to={"/movies"}>Фильмы</Link>
-              <Link className='header__link header__link_type_saved' activeClassName='header__link_active' to={"/saved-movies"}>Сохранённые фильмы</Link>
+              <Link className='header__link header__link_type_movies' to={"/movies"}>Фильмы</Link>
+              <Link className='header__link header__link_type_saved' to={"/saved-movies"}>Сохранённые фильмы</Link>
             </div>
             <Link className='header__link header__link_type_profile' to={"/profile"}>
               Аккаунт<img className='header__profile-img' src={profile} alt='Аккаунт'/>
