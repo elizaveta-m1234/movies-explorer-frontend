@@ -56,6 +56,10 @@
   height: 38px;
 }
 
+.header__link_active {
+  font-weight: 500;
+}
+
 .header__link_type_profile {
   display: flex;
   align-items: center;

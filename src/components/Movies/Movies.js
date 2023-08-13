@@ -1,9 +1,16 @@
+import { useEffect } from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
 function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly, keyWord, wasThereASearch, onSave, onDelete, checkLike, savedMovies }) {
+//восстанавливаем сохраненные при переходе на фильмы
+  useEffect(() => {
+      localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+    } 
+  )
+
   if (wasThereASearch) {
     return (
       <section className='movies'>

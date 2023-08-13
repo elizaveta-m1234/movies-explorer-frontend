@@ -52,6 +52,7 @@ function Register({ onRegister }) {
               required
               onChange={handleChange}
               value={values.email || ''}
+              pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
             />
             <span className="register__error email-error">{errors.email || ''}</span>
             <label className="register__label">Пароль</label>

@@ -8,7 +8,7 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 
-function Main({ loggedIn, movies, foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly, keyWord, wasThereASearch,
+function Main({ loggedIn, movies, foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly, isShortsOnlySaved, keyWord, wasThereASearch,
 savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDelete, checkLike}) {
   const location = useLocation();
   if (location.pathname === "/") {
@@ -50,7 +50,7 @@ savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDe
         showPreloader={showPreloader}
         onFilterSaved={onFilterSaved}
         onCheckbox={onCheckbox}
-        isShortsOnly={isShortsOnly}
+        isShortsOnlySaved={isShortsOnlySaved}
         keyWord={keyWord}
         wasThereASearchSaved={wasThereASearchSaved}
         onSave={onSave}

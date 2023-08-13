@@ -25,6 +25,7 @@ function App() {
   const [keyWord, setKeyWord] = useState("");
   const [keyWordSaved, setKeySavedWord] = useState("");
   const [isShortsOnly, setIsShortsOnly] = useState(false);
+  const [isShortsOnlySaved, setIsShortsOnlySaved] = useState(false);
   const [isProfileEditSuccesful, setIsProfileEditSuccesful] = useState(false);
   const [isProfileEditFailed, setIsProfileEditFailed] = useState(false);
   const [showPreloader, setShowPreloader] = useState(false);
@@ -53,7 +54,7 @@ function App() {
         mainApi.getMovies(),
         moviesApi.getMovies()
       ])
-        .then(([profile, savedMovies, movies])=>{ //попадаем сюда, когда оба промиса будут выполнены
+        .then(([profile, savedMovies, movies]) => { //попадаем сюда, когда оба промиса будут выполнены
           setCurentUser(profile);
           setSavedMovies(savedMovies);
           setMovies(movies);
@@ -98,6 +99,15 @@ function App() {
     }
   }, [])
 
+//восстанавливаем сохраненные при переходе на фильмы
+  useEffect(() => {
+    const pathname = location.pathname;
+      if ((pathname === '/movies') && localStorage.getItem('savedMovies')) {
+        localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+      }
+    } 
+  )
+
 //переключатель... наверное, это можно как-то оптимизировать, но я уже не могу
   function handleCheckbox() {
     const pathname = location.pathname;
@@ -116,13 +126,13 @@ function App() {
       }
     } else {
       if (keyWordSaved) {
-        if (isShortsOnly) {
-          setIsShortsOnly(false);
+        if (isShortsOnlySaved) {
+          setIsShortsOnlySaved(false);
         } else {
-          setIsShortsOnly(true);
+          setIsShortsOnlySaved(true);
         }
       } else {
-        setIsShortsOnly(false);
+        setIsShortsOnlySaved(false);
       }
     }
   }
@@ -154,13 +164,16 @@ function App() {
 
 // поиск по сохраненным фильмам -- не сохраняется при перезагрузке
   function filterMoviesSaved({ movieName }) {
+    const shortDuration = SHORT_DURATION;
+
     setWasThereASearchSaved(true);
     setShowPreloader(true);
+    localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
     setKeySavedWord(movieName);
 
-    if (isShortsOnly) {
+    if (isShortsOnlySaved) {
       const foundMoviesShortSaved = savedMovies.filter((movie) => {
-        return movie.duration <= 40 && (movie.nameRU.toLowerCase().includes(movieName.toLowerCase()) || movie.nameEN.toLowerCase().includes(movieName.toLowerCase()));
+        return movie.duration <= shortDuration && (movie.nameRU.toLowerCase().includes(movieName.toLowerCase()) || movie.nameEN.toLowerCase().includes(movieName.toLowerCase()));
       })
       setSavedMovies(foundMoviesShortSaved);//не меняет local storage или данные на сервере, т.ч. при перезагрузке восстановится
     } else {
@@ -271,7 +284,7 @@ function App() {
               <NotFound />
             }
           />
-          <Route exact path='/' element={
+          <Route path='/' element={
             <>
               <Header onBurgerClick={handleBurgerClick} loggedIn={loggedIn} />
               <Main />
@@ -311,7 +324,7 @@ function App() {
                 showPreloader={showPreloader}
                 onFilterSaved={filterMoviesSaved}
                 onCheckbox={handleCheckbox}
-                isShortsOnly={isShortsOnly}
+                isShortsOnlySaved={isShortsOnlySaved}
                 wasThereASearchSaved={wasThereASearchSaved}
                 onSave={handleMovieSave}
                 onDelete={handleMovieDelete}

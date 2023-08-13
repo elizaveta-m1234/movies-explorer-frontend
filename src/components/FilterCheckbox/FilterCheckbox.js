@@ -1,6 +1,6 @@
 import './FilterCheckbox.css';
 
-function FilterCheckbox({ onCheckbox, isShortsOnly, formSubmit }) {
+function FilterCheckbox({ onCheckbox, isShortsOnly, isShortsOnlySaved, formSubmit }) {
   
   function handleCheckbox(e) {
     e.preventDefault();
@@ -14,7 +14,7 @@ function FilterCheckbox({ onCheckbox, isShortsOnly, formSubmit }) {
       <input
         className='checkbox__input'
         type='checkbox'
-        checked={isShortsOnly}
+        checked={isShortsOnly || isShortsOnlySaved}
         onChange={handleCheckbox}
       />
       <label className='checkbox__label'>Короткометражки</label>
