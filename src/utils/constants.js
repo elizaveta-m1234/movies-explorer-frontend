@@ -1,5 +1,5 @@
-export const MIN_WIDTH_BREAKPOINT = 480;
-export const MID_WIDTH_BREAKPOINT = 1040;
+export const MIN_WIDTH_BREAKPOINT = 767;
+export const MID_WIDTH_BREAKPOINT = 1279;
 
 export const MIN_WIDTH_CARDS = 5;
 export const MID_WIDTH_CARDS = 8;

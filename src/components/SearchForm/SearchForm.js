@@ -5,14 +5,15 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import search from '../../images/search.svg';
 import useFormWithValidation from '../../utils/useFormWithValidation';
 
-function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, isShortsOnlySaved, keyWord }) {
+function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord }) {
   const { values, handleChange, resetForm, isValid } = useFormWithValidation();
   const [error, setError] = useState('');
   const location = useLocation();
 
     useEffect(() => {
-        resetForm();
-    }, [resetForm]);
+      resetForm({movieName: keyWord});
+    }, [resetForm, keyWord]);
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,6 +30,15 @@ function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, isShort
         setError('')
       }
     }
+  }
+
+  function handleCheckbox(e) {
+    if (!isValid) {
+      setError('Введите ключевое слово');
+    } else {
+        onCheckbox({ movieName: values.movieName });
+        setError('')
+      }
   }
 
   return (
@@ -50,7 +60,7 @@ function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, isShort
             <span className="search__error movieName-error">{error}</span>
             <button className='search__button' type='submit'>Найти</button>
           </form>
-          <FilterCheckbox onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} isShortsOnlySaved={isShortsOnlySaved} formSubmit={handleSubmit} />
+          <FilterCheckbox onCheckbox={handleCheckbox} isShortsOnly={isShortsOnly} formSubmit={handleSubmit} />
         </div>
       </div>
     </section>

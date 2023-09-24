@@ -8,8 +8,8 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 
-function Main({ loggedIn, movies, foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly, isShortsOnlySaved, keyWord, wasThereASearch,
-savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDelete, checkLike, keyWordSaved}) {
+function Main({ loggedIn, movies, foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly, keyWord, wasThereASearch,
+savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDelete, checkLike, keyWordSaved, clearKeyWord}) {
   const location = useLocation();
   if (location.pathname === "/") {
     return <main className='main'>
@@ -50,13 +50,14 @@ savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDe
         showPreloader={showPreloader}
         onFilterSaved={onFilterSaved}
         onCheckbox={onCheckbox}
-        isShortsOnlySaved={isShortsOnlySaved}
+        isShortsOnly={isShortsOnly}
         keyWord={keyWord}
         wasThereASearchSaved={wasThereASearchSaved}
         onSave={onSave}
         onDelete={onDelete}
         checkLike={checkLike}
         keyWordSaved={keyWordSaved}
+        clearKeyWord={clearKeyWord}
       />
     </main>
   }

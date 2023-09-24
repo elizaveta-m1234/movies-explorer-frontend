@@ -14,7 +14,7 @@ function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly
   if (wasThereASearch) {
     return (
       <section className='movies'>
-        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} keyWord={keyWord} />
+        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} />
         {
           showPreloader ?
             <Preloader />

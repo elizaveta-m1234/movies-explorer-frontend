@@ -42,12 +42,6 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike,
     setInitialNumber(initialNumber + additionalNumber);
   }
 
-  function checkIfSearch() {
-    if (keyWordSaved === '') {
-      foundMoviesSaved = savedMovies
-    } 
-  }
-
   if (location.pathname === "/movies") {
   
     return (
@@ -87,15 +81,18 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike,
               savedMovies.length === 0 ?
                 <div className='card-list__empty'></div>
                 :
-                
-                <>
+                keyWordSaved === '' ?
                   <ul className='card-list__list'>
-                    {checkIfSearch()}
+                    {savedMovies.map((movie) => (
+                      <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} savedMovies={savedMovies} />
+                    ))}
+                  </ul>
+                  :
+                  <ul className='card-list__list'>
                     {foundMoviesSaved.map((movie) => (
                       <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} savedMovies={savedMovies} />
                     ))}
                   </ul>
-                </>
         }
       </section>
     )

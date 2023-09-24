@@ -18,7 +18,7 @@
   margin: 0 14px 0 0;
 }
 
-.checkbox__input::before {
+.checkbox__input::after {
   content: '';
   position: absolute;
   width: 16px;
@@ -32,7 +32,7 @@
   box-sizing: border-box;
 }
 
-.checkbox__input:checked:before {
+.checkbox__input:checked::after {
   left: 18px;
   background: #2BE080;
 }

@@ -109,33 +109,16 @@ function App() {
     } 
   )
 
-//переключатель... наверное, это можно как-то оптимизировать, но я уже не могу
-  function handleCheckbox() {
-    const pathname = location.pathname;
-    if (pathname === '/movies') {
-      if (keyWord) {
-        if (isShortsOnly) {
-          localStorage.setItem('checkbox', JSON.stringify(false));
-          setIsShortsOnly(false);
-        } else {
-          localStorage.setItem('checkbox', JSON.stringify(true));
-          setIsShortsOnly(true);
-        }
-      } else {
-        localStorage.setItem('checkbox', JSON.stringify(false));
-          setIsShortsOnly(false);
-      }
-    } else {
-      if (keyWordSaved) {
-        if (isShortsOnlySaved) {
-          setIsShortsOnlySaved(false);
-        } else {
-          setIsShortsOnlySaved(true);
-        }
-      } else {
-        setIsShortsOnlySaved(false);
-      }
-    }
+//переключатель короткометражек для фильмов
+  function handleCheckbox({ movieName }) {
+    setIsShortsOnly(!isShortsOnly);
+    filterMoviesAll({ movieName });
+  }
+
+  // переключатель короткометражек для сохраненных
+  function handleCheckboxSaved({ movieName }) {
+    setIsShortsOnlySaved(!isShortsOnlySaved);
+    filterMoviesSaved({ movieName });
   }
 
 //поиск по фильмам
@@ -168,7 +151,6 @@ function App() {
     const shortDuration = SHORT_DURATION;
 
     setWasThereASearchSaved(true);
-    setShowPreloader(true);
     localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
     setKeySavedWord(movieName);
 
@@ -183,7 +165,10 @@ function App() {
       })
       setFoundMoviesSaved(foundMoviesAllSaved);
     }
-    setShowPreloader(false);
+  }
+
+  function clearKeyWord() {
+    setKeySavedWord('');
   }
 
 //сохранение фильма
@@ -196,7 +181,6 @@ function App() {
         .then((newMovie) => {
           setSavedMovies([newMovie, ...savedMovies]);
           localStorage.setItem('savedMovies', JSON.stringify([newMovie, ...savedMovies]));
-          console.log(savedMovies);
         })
         .catch((err) => {
           console.log(err);
@@ -209,6 +193,8 @@ function App() {
       .then(() => {
         const newArray = savedMovies.filter((item) => item._id !== movieId);
         setSavedMovies(newArray);
+        const newArrayFound = foundMoviesSaved.filter((item) => item._id !== movieId);
+        setFoundMoviesSaved(newArrayFound);
         localStorage.setItem('savedMovies', JSON.stringify(newArray));
       })
       .catch((err) => {
@@ -324,7 +310,7 @@ function App() {
                 savedMovies={savedMovies}
                 showPreloader={showPreloader}
                 onFilterSaved={filterMoviesSaved}
-                onCheckbox={handleCheckbox}
+                onCheckbox={handleCheckboxSaved}
                 isShortsOnlySaved={isShortsOnlySaved}
                 wasThereASearchSaved={wasThereASearchSaved}
                 onSave={handleMovieSave}
@@ -332,6 +318,7 @@ function App() {
                 checkLike={checkLike}
                 foundMoviesSaved={foundMoviesSaved}
                 keyWordSaved={keyWordSaved}
+                clearKeyWord={clearKeyWord}
               />
               <Footer />
               <Popup isOpen={isPopupOpened} onClose={closePopup}/>
