@@ -26,13 +26,13 @@ function App() {
   const [keyWord, setKeyWord] = useState("");
   const [keyWordSaved, setKeySavedWord] = useState("");
   const [isShortsOnly, setIsShortsOnly] = useState(false);
-  const [isShortsOnlySaved, setIsShortsOnlySaved] = useState(false);
   const [isProfileEditSuccesful, setIsProfileEditSuccesful] = useState(false);
   const [isProfileEditFailed, setIsProfileEditFailed] = useState(false);
   const [showPreloader, setShowPreloader] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [wasThereASearch, setWasThereASearch] = useState(false);
   const [wasThereASearchSaved, setWasThereASearchSaved] = useState(false);
+  const [isSearchEven, setIsSearchEven] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -108,17 +108,11 @@ function App() {
       }
     } 
   )
+  
 
 //переключатель короткометражек для фильмов
-  function handleCheckbox({ movieName }) {
+  function handleCheckbox() {
     setIsShortsOnly(!isShortsOnly);
-    filterMoviesAll({ movieName });
-  }
-
-  // переключатель короткометражек для сохраненных
-  function handleCheckboxSaved({ movieName }) {
-    setIsShortsOnlySaved(!isShortsOnlySaved);
-    filterMoviesSaved({ movieName });
   }
 
 //поиск по фильмам
@@ -128,6 +122,7 @@ function App() {
     setWasThereASearch(true);
     setShowPreloader(true);
     localStorage.setItem('keyWord', JSON.stringify(movieName));
+    localStorage.setItem('checkbox', JSON.stringify(isShortsOnly));
     setKeyWord(movieName);
     
     if (isShortsOnly) {
@@ -143,6 +138,7 @@ function App() {
       localStorage.setItem('foundMovies', JSON.stringify(foundMoviesAll));
       setFoundMovies(foundMoviesAll);
     }
+    
     setShowPreloader(false);
   }
 
@@ -151,10 +147,9 @@ function App() {
     const shortDuration = SHORT_DURATION;
 
     setWasThereASearchSaved(true);
-    localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
     setKeySavedWord(movieName);
 
-    if (isShortsOnlySaved) {
+    if (isShortsOnly) {
       const foundMoviesShortSaved = savedMovies.filter((movie) => {
         return movie.duration <= shortDuration && (movie.nameRU.toLowerCase().includes(movieName.toLowerCase()) || movie.nameEN.toLowerCase().includes(movieName.toLowerCase()));
       })
@@ -296,6 +291,9 @@ function App() {
                 onDelete={handleMovieDelete}
                 savedMovies={savedMovies}
                 checkLike={checkLike}
+                setFoundMovies={setFoundMovies}
+                isSearchEven={isSearchEven}
+                setIsSearchEven={setIsSearchEven}
               />
               <Footer />
               <Popup isOpen={isPopupOpened} onClose={closePopup} />
@@ -310,8 +308,8 @@ function App() {
                 savedMovies={savedMovies}
                 showPreloader={showPreloader}
                 onFilterSaved={filterMoviesSaved}
-                onCheckbox={handleCheckboxSaved}
-                isShortsOnlySaved={isShortsOnlySaved}
+                onCheckbox={handleCheckbox}
+                isShortsOnly={isShortsOnly}
                 wasThereASearchSaved={wasThereASearchSaved}
                 onSave={handleMovieSave}
                 onDelete={handleMovieDelete}
@@ -319,6 +317,7 @@ function App() {
                 foundMoviesSaved={foundMoviesSaved}
                 keyWordSaved={keyWordSaved}
                 clearKeyWord={clearKeyWord}
+                setFoundMoviesSaved={setFoundMoviesSaved}
               />
               <Footer />
               <Popup isOpen={isPopupOpened} onClose={closePopup}/>

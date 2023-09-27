@@ -15,7 +15,7 @@ import {
   MAX_WIDTH_MORE
 } from '../../utils/constants';
 
-function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike, wasThereASearchSaved, keyWordSaved, foundMoviesSaved }) {
+function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike, wasThereASearchSaved, keyWord, keyWordSaved, foundMoviesSaved, isSearchEven }) {
   const location = useLocation();
   const windowWidth = useWindowWidth();
   const [initialNumber, setInitialNumber] = useState(0);
@@ -23,6 +23,7 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike,
 
   //прописываем количество карточек для разной ширины
   useEffect(() => {
+
     if (windowWidth <= MIN_WIDTH_BREAKPOINT) {
       setInitialNumber(MIN_WIDTH_CARDS);
       setAdditionalNumber(MIN_WIDTH_MORE)
@@ -35,7 +36,8 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike,
       setInitialNumber(MAX_WIDTH_CARDS);
       setAdditionalNumber(MAX_WIDTH_MORE)
     }
-  }, [windowWidth]);
+
+  }, [windowWidth, isSearchEven]);
 
   //добавляем дополнительные фильмы на страницу
   function handleMoreButtonClick() {

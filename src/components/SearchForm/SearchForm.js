@@ -5,7 +5,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import search from '../../images/search.svg';
 import useFormWithValidation from '../../utils/useFormWithValidation';
 
-function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord }) {
+function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord, keyWordSaved, setFoundMovies, setFoundMoviesSaved, isSearchEven, setIsSearchEven }) {
   const { values, handleChange, resetForm, isValid } = useFormWithValidation();
   const [error, setError] = useState('');
   const location = useLocation();
@@ -20,6 +20,7 @@ function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord
 
     if (!isValid) {
       setError('Введите ключевое слово');
+      
     } else {
       if (location.pathname === "/movies") {
         onFilter({ movieName: values.movieName });
@@ -30,15 +31,6 @@ function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord
         setError('')
       }
     }
-  }
-
-  function handleCheckbox(e) {
-    if (!isValid) {
-      setError('Введите ключевое слово');
-    } else {
-        onCheckbox({ movieName: values.movieName });
-        setError('')
-      }
   }
 
   return (
@@ -60,7 +52,7 @@ function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord
             <span className="search__error movieName-error">{error}</span>
             <button className='search__button' type='submit'>Найти</button>
           </form>
-          <FilterCheckbox onCheckbox={handleCheckbox} isShortsOnly={isShortsOnly} formSubmit={handleSubmit} />
+          <FilterCheckbox isShortsOnly={isShortsOnly} onCheckbox={onCheckbox} keyWordSaved={keyWordSaved} setFoundMovies={setFoundMovies} keyWord={keyWord} setFoundMoviesSaved={setFoundMoviesSaved} isSearchEven={isSearchEven} setIsSearchEven={setIsSearchEven} />
         </div>
       </div>
     </section>

@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly, keyWord, wasThereASearch, onSave, onDelete, checkLike, savedMovies }) {
+function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly, keyWord, wasThereASearch, onSave, onDelete, checkLike, savedMovies, setFoundMovies, isSearchEven, setIsSearchEven }) {
 //восстанавливаем сохраненные при переходе на фильмы
   useEffect(() => {
       localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
@@ -14,19 +14,19 @@ function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly
   if (wasThereASearch) {
     return (
       <section className='movies'>
-        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} />
+        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} setFoundMovies={setFoundMovies} isSearchEven={isSearchEven} setIsSearchEven={setIsSearchEven} />
         {
           showPreloader ?
             <Preloader />
             :
-            <MoviesCardList foundMovies={foundMovies} onSave={onSave} onDelete={onDelete} checkLike={checkLike} savedMovies={savedMovies} />
+            <MoviesCardList foundMovies={foundMovies} onSave={onSave} onDelete={onDelete} checkLike={checkLike} savedMovies={savedMovies} isSearchEven={isSearchEven} />
         }
       </section>
     )
   } else {
     return (
       <section className='movies'>
-        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} />
+        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} setFoundMovies={setFoundMovies} isSearchEven={isSearchEven} setIsSearchEven={setIsSearchEven} />
         <div className='movies__empty'></div> :
       </section>
     )

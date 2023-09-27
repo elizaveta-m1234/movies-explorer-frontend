@@ -9,7 +9,7 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 
 function Main({ loggedIn, movies, foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly, keyWord, wasThereASearch,
-savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDelete, checkLike, keyWordSaved, clearKeyWord}) {
+savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDelete, checkLike, keyWordSaved, clearKeyWord, setFoundMovies, setFoundMoviesSaved, isSearchEven, setIsSearchEven}) {
   const location = useLocation();
   if (location.pathname === "/") {
     return <main className='main'>
@@ -37,6 +37,9 @@ savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDe
         onDelete={onDelete}
         savedMovies={savedMovies}
         checkLike={checkLike}
+        setFoundMovies={setFoundMovies}
+        isSearchEven={isSearchEven}
+        setIsSearchEven={setIsSearchEven}
       />
     </main>
   }
@@ -58,6 +61,7 @@ savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDe
         checkLike={checkLike}
         keyWordSaved={keyWordSaved}
         clearKeyWord={clearKeyWord}
+        setFoundMoviesSaved={setFoundMoviesSaved}
       />
     </main>
   }
