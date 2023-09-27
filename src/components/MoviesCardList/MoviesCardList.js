@@ -15,7 +15,7 @@ import {
   MAX_WIDTH_MORE
 } from '../../utils/constants';
 
-function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike, wasThereASearchSaved, keyWord, keyWordSaved, foundMoviesSaved, isSearchEven }) {
+function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike, wasThereASearchSaved, keyWord, keyWordSaved, foundMoviesSaved, isSearchEven, setFoundMoviesSaved }) {
   const location = useLocation();
   const windowWidth = useWindowWidth();
   const [initialNumber, setInitialNumber] = useState(0);
@@ -38,6 +38,12 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike,
     }
 
   }, [windowWidth, isSearchEven]);
+
+  useEffect(() => {
+    if (location.pathname === "/saved-movies" && keyWordSaved === '') {
+      setFoundMoviesSaved(JSON.parse(localStorage.getItem('savedMovies')))
+    }
+  }, [keyWordSaved]);
 
   //добавляем дополнительные фильмы на страницу
   function handleMoreButtonClick() {
@@ -83,13 +89,6 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike,
               savedMovies.length === 0 ?
                 <div className='card-list__empty'></div>
                 :
-                keyWordSaved === '' ?
-                  <ul className='card-list__list'>
-                    {savedMovies.map((movie) => (
-                      <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} savedMovies={savedMovies} />
-                    ))}
-                  </ul>
-                  :
                   <ul className='card-list__list'>
                     {foundMoviesSaved.map((movie) => (
                       <MoviesCard movie={movie} key={movie.id || movie._id} onSave={onSave} onDelete={onDelete} checkLike={checkLike} savedMovies={savedMovies} />

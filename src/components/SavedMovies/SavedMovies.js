@@ -16,7 +16,7 @@ function SavedMovies({ savedMovies, showPreloader, onFilterSaved, onCheckbox, is
           showPreloader ?
             <Preloader />
             :
-            <MoviesCardList savedMovies={savedMovies} onSave={onSave} onDelete={onDelete} checkLike={checkLike} keyWordSaved={keyWordSaved} foundMoviesSaved={foundMoviesSaved} />
+            <MoviesCardList savedMovies={savedMovies} onSave={onSave} onDelete={onDelete} checkLike={checkLike} keyWordSaved={keyWordSaved} foundMoviesSaved={foundMoviesSaved} setFoundMoviesSaved={setFoundMoviesSaved}/>
         }
       </section>
     )
