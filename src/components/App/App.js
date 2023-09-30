@@ -108,7 +108,6 @@ function App() {
       }
     } 
   )
-  
 
 //переключатель короткометражек для фильмов
   function handleCheckbox() {
@@ -119,7 +118,6 @@ function App() {
   function filterMoviesAll({ movieName }) {
     const shortDuration = SHORT_DURATION;
 
-    setWasThereASearch(true);
     setShowPreloader(true);
     localStorage.setItem('keyWord', JSON.stringify(movieName));
     localStorage.setItem('checkbox', JSON.stringify(isShortsOnly));
@@ -138,8 +136,8 @@ function App() {
       localStorage.setItem('foundMovies', JSON.stringify(foundMoviesAll));
       setFoundMovies(foundMoviesAll);
     }
-    
     setShowPreloader(false);
+    setWasThereASearch(true);
   }
 
 // поиск по сохраненным фильмам -- не сохраняется при перезагрузке

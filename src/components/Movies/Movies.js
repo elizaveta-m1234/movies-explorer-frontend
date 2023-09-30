@@ -14,7 +14,7 @@ function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly
   if (wasThereASearch) {
     return (
       <section className='movies'>
-        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} setFoundMovies={setFoundMovies} isSearchEven={isSearchEven} setIsSearchEven={setIsSearchEven} />
+        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} setFoundMovies={setFoundMovies} isSearchEven={isSearchEven} setIsSearchEven={setIsSearchEven} wasThereASearch={wasThereASearch} />
         {
           showPreloader ?
             <Preloader />
@@ -26,7 +26,7 @@ function Movies({ foundMovies, showPreloader, onFilter, onCheckbox, isShortsOnly
   } else {
     return (
       <section className='movies'>
-        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} setFoundMovies={setFoundMovies} isSearchEven={isSearchEven} setIsSearchEven={setIsSearchEven} />
+        <SearchForm onFilter={onFilter} onCheckbox={onCheckbox} isShortsOnly={isShortsOnly} keyWord={keyWord} setFoundMovies={setFoundMovies} isSearchEven={isSearchEven} setIsSearchEven={setIsSearchEven} wasThereASearch={wasThereASearch} />
         <div className='movies__empty'></div> :
       </section>
     )

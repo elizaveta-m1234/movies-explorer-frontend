@@ -55,6 +55,7 @@ savedMovies, foundMoviesSaved, onFilterSaved, wasThereASearchSaved, onSave, onDe
         onCheckbox={onCheckbox}
         isShortsOnly={isShortsOnly}
         keyWord={keyWord}
+        wasThereASearch={wasThereASearch}
         wasThereASearchSaved={wasThereASearchSaved}
         onSave={onSave}
         onDelete={onDelete}

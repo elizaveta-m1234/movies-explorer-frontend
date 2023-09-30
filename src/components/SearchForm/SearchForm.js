@@ -5,9 +5,10 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import search from '../../images/search.svg';
 import useFormWithValidation from '../../utils/useFormWithValidation';
 
-function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord, keyWordSaved, setFoundMovies, setFoundMoviesSaved, isSearchEven, setIsSearchEven }) {
+function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord, keyWordSaved, setFoundMovies, setFoundMoviesSaved, isSearchEven, setIsSearchEven, wasThereASearch, savedMovies }) {
   const { values, handleChange, resetForm, isValid } = useFormWithValidation();
   const [error, setError] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const location = useLocation();
 
     useEffect(() => {
@@ -33,6 +34,18 @@ function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord
     }
   }
 
+  function handleCheckboxClick(e) {
+    if (!isValid) {
+      setError('Введите ключевое слово');
+      
+    } else {
+      e.preventDefault();
+      onCheckbox();
+      setInputValue(values.movieName)
+      setError('')
+    }
+  }
+
   return (
     <section className='search'>
       <div className='search__container'>
@@ -52,7 +65,7 @@ function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord
             <span className="search__error movieName-error">{error}</span>
             <button className='search__button' type='submit'>Найти</button>
           </form>
-          <FilterCheckbox isShortsOnly={isShortsOnly} onCheckbox={onCheckbox} keyWordSaved={keyWordSaved} setFoundMovies={setFoundMovies} keyWord={keyWord} setFoundMoviesSaved={setFoundMoviesSaved} isSearchEven={isSearchEven} setIsSearchEven={setIsSearchEven} />
+          <FilterCheckbox isShortsOnly={isShortsOnly} onCheckbox={handleCheckboxClick} keyWordSaved={keyWordSaved} setFoundMovies={setFoundMovies} keyWord={keyWord} setFoundMoviesSaved={setFoundMoviesSaved} isSearchEven={isSearchEven} setIsSearchEven={setIsSearchEven} wasThereASearch={wasThereASearch} savedMovies={savedMovies} inputValue={inputValue} />
         </div>
       </div>
     </section>
