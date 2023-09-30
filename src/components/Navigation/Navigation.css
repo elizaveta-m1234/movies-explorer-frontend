@@ -1,0 +1,29 @@
+.navigation {
+  display: none;
+}
+
+.navigation__burger {
+  background-image: url('../../images/burger_menu.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  height: 44px;
+  width: 44px;
+  background-color: transparent;
+  margin-top: -3px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1040px) {
+  .navigation {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .navigation__burger {
+    width: 40px;
+    height: 43px;
+    margin-top: 0;
+  }
+}

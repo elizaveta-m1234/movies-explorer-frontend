@@ -1,0 +1,157 @@
+.register__container {
+  width: 396px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 70px 0;
+}
+
+.register__logo {
+  width: 38px;
+  height: 38px;
+  transition: all 0.3s;
+}
+
+.register__logo:hover{
+  opacity: 70%;
+}
+
+.register__title {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: auto;
+  padding: 40px 0;
+  margin: 0;
+}
+
+.register__fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.register__label {
+  color: #8B8B8B;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: auto;
+  margin: 0;
+  padding: 0 0 7px 0;
+}
+
+.register__input {
+  margin: 0;
+  padding: 0 0 8px 0;
+  background-color: #202020;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: auto;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid #424242;
+}
+
+.register__input_type_error {
+  color: #EE3465;
+}
+
+.register__error {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: auto;
+  color: #EE3465;
+  background-color: transparent;
+  border: none;
+  height: 12px;
+  display: block;
+  margin: 6px 0;
+}
+
+.register__error:last-of-type {
+  margin-bottom: 65px;
+}
+
+.register__button {
+  width: 100%;
+  height: 45px;
+  margin: 69px 0 16px 0;
+  border-radius: 3px;
+  background-color: #4285F4;
+  border: none;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: auto;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.register__button:hover {
+  opacity: 80%;
+}
+
+.register__button:disabled {
+  background-color: #F8F8F8;
+  color: #C2C2C2;
+  cursor: auto;
+}
+
+.register__button:disabled:hover {
+  opacity: 100%;
+}
+
+.register__nav {
+  text-align: center;
+  color: #8B8B8B;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.register__link {
+  color: #4285F4;
+  text-decoration: none;
+  transition: all 0.3s;
+  margin: 0;
+  padding: 0;
+}
+
+.register__link:hover {
+  opacity: 70%;
+}
+
+@media screen and (max-width: 568px) {
+.register__container {
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 56px 0 30px 0;
+  }
+
+  .register__logo {
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .register__title {
+    padding: 50px 0 80px;
+    text-align: center;
+  }
+
+  .register__button {
+    margin: 157px 0 14px 0;
+    font-size: 12px;
+  }
+
+  .register__nav {
+    font-size: 12px;
+  }
+
+}
