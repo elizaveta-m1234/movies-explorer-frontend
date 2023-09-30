@@ -21,6 +21,12 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike,
   const [initialNumber, setInitialNumber] = useState(0);
   const [additionalNumber, setAdditionalNumber] = useState(0);
 
+  useEffect(() => {
+    if (location.pathname === "/saved-movies" && keyWordSaved === '') {
+      setFoundMoviesSaved(JSON.parse(localStorage.getItem('savedMovies')))
+    }
+  }, [keyWordSaved]);
+
   //прописываем количество карточек для разной ширины
   useEffect(() => {
 
@@ -38,12 +44,6 @@ function MoviesCardList({ foundMovies, savedMovies, onSave, onDelete, checkLike,
     }
 
   }, [windowWidth, isSearchEven]);
-
-  useEffect(() => {
-    if (location.pathname === "/saved-movies" && keyWordSaved === '') {
-      setFoundMoviesSaved(JSON.parse(localStorage.getItem('savedMovies')))
-    }
-  }, [keyWordSaved]);
 
   //добавляем дополнительные фильмы на страницу
   function handleMoreButtonClick() {

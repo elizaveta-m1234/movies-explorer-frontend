@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SHORT_DURATION } from '../../utils/constants';
 
-function FilterCheckbox({ onCheckbox, isShortsOnly, keyWordSaved, setFoundMovies, keyWord, setFoundMoviesSaved, isSearchEven, setIsSearchEven, wasThereASearch, savedMovies, inputValue }) {
+function FilterCheckbox({ onCheckbox, isShortsOnly, setFoundMovies, setFoundMoviesSaved, isSearchEven, setIsSearchEven, wasThereASearch, savedMovies, inputValue }) {
   const location = useLocation();
 
   useEffect(() => {

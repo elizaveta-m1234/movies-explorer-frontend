@@ -6,15 +6,17 @@ import search from '../../images/search.svg';
 import useFormWithValidation from '../../utils/useFormWithValidation';
 
 function SearchForm({ onFilter, onFilterSaved, onCheckbox, isShortsOnly, keyWord, keyWordSaved, setFoundMovies, setFoundMoviesSaved, isSearchEven, setIsSearchEven, wasThereASearch, savedMovies }) {
-  const { values, handleChange, resetForm, isValid } = useFormWithValidation();
+  const { values, handleChange, setValues, isValid, setIsValid } = useFormWithValidation();
   const [error, setError] = useState('');
   const [inputValue, setInputValue] = useState('');
   const location = useLocation();
 
-    useEffect(() => {
-      resetForm({movieName: keyWord});
-    }, [resetForm, keyWord]);
-
+  useEffect(() => {
+    setValues({ movieName: keyWord });
+    if (values.movieName) {
+      setIsValid(true);
+    }
+  }, [setValues, keyWord]);
 
   function handleSubmit(e) {
     e.preventDefault();

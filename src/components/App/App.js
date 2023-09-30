@@ -137,6 +137,7 @@ function App() {
       setFoundMovies(foundMoviesAll);
     }
     setShowPreloader(false);
+    setIsSearchEven(!isSearchEven);
     setWasThereASearch(true);
   }
 
